@@ -1,0 +1,93 @@
+## 1. 테이블 표시(SHOW)
+
+```sql
+SHOW DATABASES;
+```
+
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/f3fbc65c-f86e-47b0-8cef-7672cc21cbde/22d84b66-0e34-49b7-9d6a-57d8fbc6a0a5/image.png)
+
+```sql
+SHOW DATABASES LIKE 'nation';
+```
+
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/f3fbc65c-f86e-47b0-8cef-7672cc21cbde/ba7c37a0-da64-444c-b79c-feaf1bfe055f/image.png)
+
+```sql
+SHOW DATABASES LIKE '%schema';
+```
+
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/f3fbc65c-f86e-47b0-8cef-7672cc21cbde/2dde6203-ac40-4a21-ae30-1f08add3e6fa/image.png)
+
+```sql
+SHOW DATABASES WHERE `database` NOT IN (
+'information_schema',
+'mysql',
+'performance_schema'
+);
+```
+
+- not in 포함되지 않는 것
+
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/f3fbc65c-f86e-47b0-8cef-7672cc21cbde/88a751e0-c606-4d2d-98e4-389213954588/image.png)
+
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/f3fbc65c-f86e-47b0-8cef-7672cc21cbde/e6489c45-5081-4d06-a8c0-3c3ed08edea2/image.png)
+
+## 2. 테이블 생성(CREATE)
+
+```sql
+CREATE DATABASE test;
+```
+
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/f3fbc65c-f86e-47b0-8cef-7672cc21cbde/35da8581-bba3-4ead-b1f3-2b3b20adfdb7/image.png)
+
+```sql
+CREATE TABLE projects(
+	project_id INT AUTO_INCREMENT,
+	project_name VARCHAR(255) NOT NULL,
+	begin_date DATE,
+	end_date DATE,
+	cost DECIMAL(15, 2) NOT NULL,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY(project_id)
+);
+```
+
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/f3fbc65c-f86e-47b0-8cef-7672cc21cbde/5d78a00c-6f5a-41aa-b98d-0822e2fee9fe/image.png)
+
+```sql
+CREATE TABLE milestones(
+	milestone_id INT AUTO_INCREMENT,
+	project_id INT,
+	milestone VARCHAR(255) NOT NULL,
+	start_date DATE NOT NULL,
+	end_date DATE NOT NULL,
+	completed BOOL DEFAULT FALSE,
+	primary KEY(milestone_id, project_id),
+	FOREIGN KEY(project_id) REFERENCES projects(project_id)
+);
+```
+
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/f3fbc65c-f86e-47b0-8cef-7672cc21cbde/d6307cdd-ace6-4edb-8885-ada6c2408759/image.png)
+
+- `primary key` : 유일키
+- `foreign key` : 외래키
+
+## 3. 테이블 삭제(DROP)
+
+```sql
+DROP DATABASE test;
+```
+
+```sql
+DROP DATABASE if exists test;
+```
+
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/f3fbc65c-f86e-47b0-8cef-7672cc21cbde/63e7e91f-7af3-4958-aae1-1a0798870c1c/image.png)
+
+## 4. 테이블 변경(ALTER)
+
+```sql
+ALTER DATABASE crm
+	CHARACTER SET = 'latin1'
+	COLLATE = 'latin1_swedish_ci';
+```
